@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
+<configuration>
+    <!-- 指定属性文件路径 -->
+	<!-- <property resource="META-INF/application.properties" /> -->
+	
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>UTF-8</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date [%thread] %-5level %logger{50} - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Encoding>UTF-8</Encoding>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <fileNamePattern>${catalina.base}/logs/S3H4.%d{yyyy-MM-dd}.log</fileNamePattern>
+		    <maxHistory>30</maxHistory> 
+	   	</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date [%thread] %-5level %logger{50} - %msg%n</pattern>
+		</layout>
+	</appender>
+	
+	<!--日志异步到数据库 -->  
+<!--     <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+		<connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+		      <driverClass>oracle.jdbc.driver.OracleDriver</driverClass>
+		      <url>${jdbc.url}</url>
+		      <user>${jdbc.username}</user>
+		      <password>${jdbc.password}</password>
+	    </connectionSource>
+  </appender> -->
+
+	<logger name="com.json"/>
+	<logger name="org.springframework"/>
+	<logger name="org.springframework.orm"/>
+	<logger name="org.apache"/>
+	<logger name="o.hibernate.engine"/>
+	<logger name="org.hibernate"/>
+	<logger name="org.hibernate.SQL"/>
+	
+	<root>
+		<level value="WARN" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="logfile"/>
+	</root>
+</configuration>
