@@ -100,7 +100,7 @@ public class UserController {
 		JSONObject j = getStatus(service.addUser(u));
 		JsonSend.send(response, j.toJSONString());	
 	}
-	@RequestMapping(value="/adduser",method=RequestMethod.POST)
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public void login(@RequestParam(value="account")String account,@RequestParam(value="pwd")String pwd,
 			HttpServletRequest request,HttpServletResponse response){
 		JSONObject j = getStatus(service.isLoginOK(account, pwd));
