@@ -15,5 +15,5 @@ public interface UserService {
 	public boolean deleteUserById(String userId);
 	public boolean addUser(User user);
 	public boolean changePassword(String userName,String oldPassword,String newPassword);
-	public boolean isLoginOK(String userAccount,String pwd);
+	public String isLoginOK(String userAccount,String pwd);
 }

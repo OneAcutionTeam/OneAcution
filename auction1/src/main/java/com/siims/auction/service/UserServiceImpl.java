@@ -81,12 +81,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isLoginOK(String userAccount, String pwd) {
+	public String isLoginOK(String userAccount, String pwd) {
 		// TODO Auto-generated method stub
 		//User u = dao.
 		String hql = "from User as u where u.account = ? and u.password = ? ";
 		User u = dao.findEntityByHql(hql, userAccount,pwd);
-		return u == null ? false : true;
+		return u == null ? "0" : u.getId();
 	}
 
 }

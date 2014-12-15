@@ -118,4 +118,11 @@ public class UserController {
 		}
 		return j;
 	}
+	
+	private JSONObject getStatus(String status){
+		JSONObject j = new JSONObject();
+	
+		j.put("status", status);
+		return j;
+	}
 }
