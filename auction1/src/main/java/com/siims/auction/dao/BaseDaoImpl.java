@@ -88,6 +88,7 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
 		Transaction t = getSession().beginTransaction();
 		getSession().saveOrUpdate(model);
 		t.commit();
+		getSession().flush();
 	}
 	
 	@Override

@@ -98,4 +98,24 @@ public class UserServiceImpl implements UserService {
 		return u == null ? "0" : u.getId();
 	}
 
+	@Override
+	public boolean updateUser(User u) {
+		// TODO Auto-generated method stub
+		try{
+		dao.saveOrUpdate(u);
+		return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
+			
+		}
+		return false;
+	}
+
+	@Override
+	public String isLoginPhone(String userAccount, String pwd) {
+		String hql = "from User as u where u.phone = ? and u.password = ? ";
+		User u = dao.findEntityByHql(hql, userAccount,pwd);
+		return u == null ? "0" : u.getId();
+	}
+
 }

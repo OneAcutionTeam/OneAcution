@@ -16,4 +16,6 @@ public interface UserService {
 	public boolean addUser(User user);
 	public boolean changePassword(String userName,String oldPassword,String newPassword);
 	public String isLoginOK(String userAccount,String pwd);
+	public String isLoginPhone(String userAccount,String pwd);
+	public boolean updateUser(User u);
 }

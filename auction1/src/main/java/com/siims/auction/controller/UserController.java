@@ -101,10 +101,38 @@ public class UserController {
 		JSONObject j = getStatus(service.addUser(u));
 		JsonSend.send(response, j.toJSONString());	
 	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public void updateUser(@RequestParam(value="id",required=true)String id,@RequestParam(value="name",required=true)String name,
+			@RequestParam(value="pwd",required=true)String pwd,@RequestParam(value="account",required=true)String account,
+			@RequestParam(value="phone",required=false)String phone,@RequestParam(value="city",required=false)String city,
+			@RequestParam(value="region",required=false)String region,
+			HttpServletRequest request,HttpServletResponse response
+			){
+		User u = new User();
+		u.setAccount(account);
+		u.setCity(city);
+		u.setId(id);
+		u.setName(name);
+		u.setPassword(pwd);
+		u.setPhone(phone);
+		u.setRegion(region);
+		System.out.print("acc  "+account+"id"+id);
+		JSONObject j = getStatus(service.updateUser(u));
+		JsonSend.send(response, j.toJSONString());	
+	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public void login(@RequestParam(value="account")String account,@RequestParam(value="pwd")String pwd,
+	public void login(@RequestParam(value="account",required=false)String account,
+			@RequestParam(value="phone",required=false)String phone,
+			@RequestParam(value="pwd")String pwd,
 			HttpServletRequest request,HttpServletResponse response){
-		JSONObject j = getStatus(service.isLoginOK(account, pwd));
+		JSONObject j ;
+		if(account==null||account.equals("")){
+			j = getStatus(service.isLoginOK(account, pwd));
+		}else{
+			j = getStatus(service.isLoginPhone(phone, pwd));
+		}
+		
 		JsonSend.send(response, j.toJSONString());
 	}
 	
