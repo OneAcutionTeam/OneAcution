@@ -60,9 +60,10 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
     private SessionFactory sessionFactory;
     
     public Session getSession() {
+    	
         return sessionFactory.getCurrentSession();
     }
-    
+ 
 	@SuppressWarnings("unchecked")
 	@Override
 	public M get(PK id) {
@@ -72,17 +73,28 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
 	@SuppressWarnings("unchecked")
 	@Override
 	public PK save(M model) {
-		return (PK) getSession().save(model);
+		Session session = getSession();
+		M m = (M) session.merge(model);
+		Transaction t = session.beginTransaction();
+		PK res = (PK)session.save(m);
+		t.commit();
+		session.flush();
+		return res;
+		
 	}
 	
 	@Override
 	public void saveOrUpdate(M model) {
+		Transaction t = getSession().beginTransaction();
 		getSession().saveOrUpdate(model);
+		t.commit();
 	}
 	
 	@Override
 	public void update(M model) {
+		Transaction t = getSession().beginTransaction();
 		getSession().update(model);
+		t.commit();
 	}
 
 	@Override

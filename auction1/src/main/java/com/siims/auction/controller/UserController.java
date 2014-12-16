@@ -81,8 +81,8 @@ public class UserController {
 	@RequestMapping(value="/adduser",method=RequestMethod.POST)
 	public void addUser(@RequestParam(value="name",required=true)String name,
 			@RequestParam(value="pwd",required=true)String pwd,@RequestParam(value="account",required=true)String account,
-			@RequestParam(value="phone",required=true)String phone,@RequestParam(value="city",required=true)String city,
-			@RequestParam(value="region",required=true)String region,
+			@RequestParam(value="phone",required=false)String phone,@RequestParam(value="city",required=false)String city,
+			@RequestParam(value="region",required=false)String region,
 			HttpServletRequest request,HttpServletResponse response
 			){
 		User u = new User();
@@ -97,6 +97,7 @@ public class UserController {
 		u.setPassword(pwd);
 		u.setPhone(phone);
 		u.setRegion(region);
+		System.out.print("acc  "+account);
 		JSONObject j = getStatus(service.addUser(u));
 		JsonSend.send(response, j.toJSONString());	
 	}

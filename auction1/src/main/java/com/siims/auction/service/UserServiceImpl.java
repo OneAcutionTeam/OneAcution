@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 			JSONObject j = new JSONObject();
 			j.put("userName", u.getName());
 			j.put("account", u.getAccount());
+			j.put("pwd", u.getPassword());
 			j.put("userId", u.getId());
 			j.put("userCity", u.getCity());
 			j.put("userRegion", u.getRegion());
@@ -56,12 +57,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean addUser(User user) {
 		// TODO Auto-generated method stub
+		
 		try{
-			dao.save(user);
+			String key = dao.save(user);
+			if(key!=null){
+				System.out.println(key);
+				return true;
+			}else{
+				return false;
+			}
+			
 		}catch(Exception e){
-			return false;
+			System.out.println(e.toString());
 		}
-		return true;
+		return false;
 	}
 
 	@Override
