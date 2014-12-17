@@ -28,8 +28,7 @@ import org.springframework.util.Assert;
 
 /** 
  * 通用dao层实现类，使用Hibernate4实现。
- * @author	zhan,ent
- * @Email jnzt110@126.com
+ * @author	dosh
  * @version 2014年9月2日 下午4:10:24
  */
 public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> {
@@ -53,7 +52,7 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
         Assert.notNull(pkName);
         // @Entity name not null
         HQL_COUNT_ALL = " select count(*) from " + this.entityClass.getSimpleName();
-        HQL_LIST_ALL = "from " + this.entityClass.getSimpleName() + " order by " + pkName + " desc";
+        HQL_LIST_ALL = "from " + this.entityClass.getSimpleName() ;
     }
         
     @Autowired
@@ -105,12 +104,16 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
 	
 	@Override
 	public void delete(PK id) {
+		Transaction t = getSession().beginTransaction();
 		getSession().delete(this.get(id));
+		t.commit();
 	}
 	
 	@Override
 	public void delete(M model) {
+		Transaction t = getSession().beginTransaction();
 		getSession().delete(model);
+		t.commit();
 	}
 	
 	@Override
@@ -139,7 +142,12 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
      */
     @SuppressWarnings("unchecked")
 	public List<M> getAll() {
-    	return getSession().createQuery(HQL_LIST_ALL).list();
+    	Session s = getSession();
+    	Transaction t = s.beginTransaction();
+    	Query q =  s.createQuery(HQL_LIST_ALL);
+    	t.commit();
+    	s.flush();
+    	return q.list();
     }
     
     /**

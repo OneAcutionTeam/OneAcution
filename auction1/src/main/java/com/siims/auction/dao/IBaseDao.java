@@ -5,8 +5,7 @@ import java.util.List;
 
 /** 
  * 通用dao层接口
- * @author	zhan,ent
- * @Email jnzt110@126.com
+ * @author	dosh
  * @version 2014年9月2日 下午4:05:28
  */
 public interface IBaseDao<M, PK extends Serializable>{

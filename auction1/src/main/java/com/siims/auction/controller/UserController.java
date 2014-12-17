@@ -127,7 +127,8 @@ public class UserController {
 			@RequestParam(value="pwd")String pwd,
 			HttpServletRequest request,HttpServletResponse response){
 		JSONObject j ;
-		if(account==null||account.equals("")){
+		System.out.println("acc "+account+" phone"+phone);
+		if(account!=null){
 			j = getStatus(service.isLoginOK(account, pwd));
 		}else{
 			j = getStatus(service.isLoginPhone(phone, pwd));
