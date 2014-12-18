@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.siims.auction.domain.Goods;
@@ -39,6 +41,8 @@ public class GoodsController {
 			){
 		List<Object> goods = service.getUserPublishedGoodsByuId(userId);
 		JSONArray array = new JSONArray(goods);
+		
+		
 		JsonSend.send(response, array.toJSONString());
 	}
 	@RequestMapping(value="goods",method=RequestMethod.GET)
@@ -61,6 +65,19 @@ public class GoodsController {
 		j.put("gUserId", g.getgUserId());
 		
 		JsonSend.send(response, j.toJSONString());
+	}
+	
+	@RequestMapping(value="user_goods",method=RequestMethod.POST)
+	public void addGoods(
+			@RequestParam(value="goods_name",required=true) String name,
+			@RequestParam(value="user_id",required=true)String userId,
+			@RequestParam(value="origion_price",required=true) double origionPrice,
+			@RequestParam(value="goods_price",required=true)double price,
+			@RequestParam(value="good_desc",required=true)String desc,
+			
+			HttpServletRequest request,HttpServletResponse response
+			){
+		
 	}
 	
 

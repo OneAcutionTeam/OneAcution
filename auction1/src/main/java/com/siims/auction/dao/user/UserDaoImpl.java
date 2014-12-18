@@ -8,7 +8,6 @@ import com.siims.auction.domain.User;
 
 
 @Repository("UserDao")
-@SuppressWarnings("restriction")
 @Transactional
 public class UserDaoImpl extends BaseDaoImpl<User, String>implements UserDao{
 

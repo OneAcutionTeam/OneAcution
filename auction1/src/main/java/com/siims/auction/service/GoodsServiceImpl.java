@@ -40,9 +40,13 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public List<Object> getUserPublishedGoodsByuId(String userId) {
 		// TODO Auto-generated method stub
-		String hql = "select from Goods as g where g.gUserId = ? ";
-		List<Goods> goods = dao.findByHql(hql, userId);
-		
+		String hql = "from Goods as g where g.gUserId = ? ";
+		List<Goods> goods = null;
+		try{
+			goods = dao.findByHql(hql, userId);
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
 		List<Object> res = new ArrayList<Object>();
 		for(Goods g : goods){
 			JSONObject j = new JSONObject();
