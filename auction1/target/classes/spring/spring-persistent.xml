@@ -129,4 +129,14 @@
 		<aop:pointcut id="transactionPointcut" expression="execution(* sy.service..*Impl.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
+	
+	<bean id = "multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<property name="maxUploadSize">
+<value>51200000</value>
+</property>
+<property name="maxInMemorySize"> 
+<value>1024</value> 
+</property> 
+</bean>
+	
 </beans>

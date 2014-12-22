@@ -61,7 +61,7 @@ public class ContactServiceImpl implements ContactService{
 		return true;
 		}
 		catch(Exception e){
-			
+			System.out.println(e.toString());
 		}
 		return false;
 	}

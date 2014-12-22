@@ -63,17 +63,19 @@ public class GoodsController {
 		j.put("gImages", g.getgImages());
 		j.put("gContract", g.getgConTractId());
 		j.put("gUserId", g.getgUserId());
+
 		
 		JsonSend.send(response, j.toJSONString());
 	}
 	
-	@RequestMapping(value="user_goods",method=RequestMethod.POST)
+	@RequestMapping(value="add_goods",method=RequestMethod.POST)
 	public void addGoods(
 			@RequestParam(value="goods_name",required=true) String name,
 			@RequestParam(value="user_id",required=true)String userId,
 			@RequestParam(value="origion_price",required=true) double origionPrice,
 			@RequestParam(value="goods_price",required=true)double price,
 			@RequestParam(value="good_desc",required=true)String desc,
+			@RequestParam(value="goods_contract",required=true)String contactId,
 			
 			HttpServletRequest request,HttpServletResponse response
 			){

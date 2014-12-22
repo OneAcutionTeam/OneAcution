@@ -74,7 +74,7 @@ public class ContactController {
 		c.setcCity(city);
 		c.setcRegion(region);
 		c.setcUserId(usetId);
-		
+		System.out.println(c.getcName()+c.getcRegion()+c.getcId());
 		JSONObject j = getStatus(service.addContact(c));
 		JsonSend.send(response, j.toJSONString());
 		

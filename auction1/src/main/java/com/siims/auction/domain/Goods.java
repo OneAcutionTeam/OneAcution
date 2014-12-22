@@ -41,6 +41,9 @@ public class Goods implements Serializable{
 	private String gUserId;
 	
 
+	
+
+
 	public String getgUserId() {
 		return gUserId;
 	}
