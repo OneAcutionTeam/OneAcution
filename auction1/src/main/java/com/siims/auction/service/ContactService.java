@@ -12,5 +12,6 @@ public interface ContactService {
 	public boolean deleteContact(Contact c);
 	public boolean deleteContact(String contactId);
 	public boolean updataContact(Contact c);
+	public Contact getContactById(String cId);
 	
 }

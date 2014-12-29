@@ -106,4 +106,11 @@ public class ContactServiceImpl implements ContactService{
 			return false;
 	}
 
+	@Override
+	public Contact getContactById(String cId) {
+		// TODO Auto-generated method stub
+		
+		return dao.get(cId);
+	}
+
 }

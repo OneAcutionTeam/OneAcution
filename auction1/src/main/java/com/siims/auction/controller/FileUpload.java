@@ -53,7 +53,7 @@ public class FileUpload {
 		long uniqueId = c.getTimeInMillis();
 		String images="";
 
-		String savePath = request.getRealPath("/");
+		String savePath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/images/";//request.getContextPath();
 		 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
 		
 		 if(multipartResolver.isMultipart(request)){
@@ -73,7 +73,9 @@ public class FileUpload {
 	                        //重命名上传后的文件名  
 	                        String fileName =  file.getOriginalFilename();  
 	                        //定义上传路径  
-	                        String path = savePath+"/images/" + fileName;
+	                        String path = savePath+ fileName;
+	                        
+	                        
 	                        System.out.println("saved in path :"+path);
 	                        File localFile = new File(path);  
 	                        file.transferTo(localFile);  
