@@ -11,5 +11,8 @@ public interface GoodsService {
 	public boolean addGoods(Goods goods);
 	public boolean deleteGoods(Goods goods);
 	public boolean deleteGoods(String goodsId);
+	public boolean deleteSeletedGoods(String ids);
+	public boolean publishGoods(String goodsId);
+	public boolean publishSeletedGoods(String ids);
 	
 }

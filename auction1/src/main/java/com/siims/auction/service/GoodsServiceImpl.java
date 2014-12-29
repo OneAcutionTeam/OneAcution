@@ -106,10 +106,53 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public boolean deleteGoods(String goodsId) {
 		// TODO Auto-generated method stub
+		String hql = "delete from Goods g where g.id = "+goodsId;
 		try{
-			dao.delete(goodsId);
+			dao.deleteByHql(hql);
+			return true;
 		}catch(Exception e){
-			
+			System.out.println(e.toString());
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteSeletedGoods(String ids) {
+		// TODO Auto-generated method stub
+		String hql ="delete from Goods g where g.id in ("+ids+")";
+		try{
+			dao.deleteByHql(hql);
+			return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return false;
+	}
+
+	@Override
+	public boolean publishGoods(String goodsId) {
+		// TODO Auto-generated method stub
+		String hql = "update Goods g set g.gPublished = 1 where g.id = "+goodsId;
+		
+		try{
+			dao.executeHql(hql);
+			return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return false;
+	}
+
+	@Override
+	public boolean publishSeletedGoods(String ids) {
+		// TODO Auto-generated method stub
+	String hql = "update Goods g set g.gPublished = 1 where g.id in ( "+ids+")";
+		
+		try{
+			dao.executeHql(hql);
+			return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
 		}
 		return false;
 	}

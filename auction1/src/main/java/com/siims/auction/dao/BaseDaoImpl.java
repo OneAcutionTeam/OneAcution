@@ -293,6 +293,28 @@ public class BaseDaoImpl<M, PK extends Serializable> implements IBaseDao<M, PK> 
        //  query.setMaxResults(count).setFirstResult(start);
          List<M> list = query.list();
          return list;
-	} 
+	}
+
+	@Override
+	public  boolean deleteByHql(String hql){
+        Session s = getSession();
+        Transaction t = null;
+        try{
+            t = s.beginTransaction();
+            Query q = s.createQuery(hql);
+            q.executeUpdate();
+            t.commit();
+            s.flush();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+	@Override
+	public boolean executeHql(String hql) {
+		// TODO Auto-generated method stub
+		return deleteByHql(hql);
+	}
     
 }

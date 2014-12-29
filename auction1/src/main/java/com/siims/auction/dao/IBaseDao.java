@@ -126,4 +126,14 @@ public interface IBaseDao<M, PK extends Serializable>{
      * @return
      */
     public List<M>findByHql(String hql,Object... values );
+    /**
+     * 
+     */
+    public boolean deleteByHql(String hql);
+    /**
+     * 
+     * @param hql
+     * @return
+     */
+    public boolean executeHql(String hql);
 }

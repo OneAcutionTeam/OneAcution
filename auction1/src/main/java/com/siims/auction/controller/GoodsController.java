@@ -117,6 +117,44 @@ public class GoodsController {
 			HttpServletRequest request,HttpServletResponse response
 			){
 		boolean isDelete = service.deleteGoods(id);
+		
+		JSONObject j = getStatus(isDelete);
+		JsonSend.send(response,j.toJSONString());
+	}
+	
+	@RequestMapping(value="delete_goods_seleted",method=RequestMethod.POST)
+	public void deleteSeletedGoods(
+			@RequestParam(value="goods_ids",required=true) String ids,
+			ModelMap model,
+			HttpServletRequest request,HttpServletResponse response
+			){
+	
+		boolean isDelete = service.deleteSeletedGoods(ids);
+		
+		JSONObject j = getStatus(isDelete);
+		JsonSend.send(response,j.toJSONString());
+	}
+	
+	@RequestMapping(value="publish_goods",method=RequestMethod.POST)
+	public void publishGoods(
+			@RequestParam(value="goods_id",required=true) String id,
+			ModelMap model,
+			HttpServletRequest request,HttpServletResponse response
+			){
+		boolean isDelete = service.publishGoods(id);
+		
+		JSONObject j = getStatus(isDelete);
+		JsonSend.send(response,j.toJSONString());
+	}
+	
+	@RequestMapping(value="publish_goods_seleted",method=RequestMethod.POST)
+	public void publishSeletedGoods(
+			@RequestParam(value="goods_id",required=true) String ids,
+			ModelMap model,
+			HttpServletRequest request,HttpServletResponse response
+			){
+		boolean isDelete = service.publishSeletedGoods(ids);
+		
 		JSONObject j = getStatus(isDelete);
 		JsonSend.send(response,j.toJSONString());
 	}
