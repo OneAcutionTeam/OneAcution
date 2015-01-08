@@ -53,7 +53,7 @@ public class FileUpload {
 		long uniqueId = c.getTimeInMillis();
 		String images="";
 
-		String savePath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/images/";//request.getContextPath();
+		String savePath ="C:/Program Files/apache-tomcat-7.0.53/webapps/auction1/images/";//request.getContextPath();
 		 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
 		
 		 if(multipartResolver.isMultipart(request)){
@@ -96,7 +96,7 @@ public class FileUpload {
 		g.setgImages(images);
 		g.setgPublished(0);
 		g.setgUserId(userId);
-       System.out.println(g.getgImages());
+       System.out.println("add name "+g.getgName());
         JSONObject j = new JSONObject();
         if(service.addGoods(g)){
         	j.put("status", 1);

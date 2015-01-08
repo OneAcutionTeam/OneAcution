@@ -109,6 +109,22 @@ public class ContactController {
 		JsonSend.send(response, j.toJSONString());
 	}
 	
+	@RequestMapping(value="contact",method=RequestMethod.GET)
+	public void getContactById(
+			@RequestParam(value="contact_id")String id,
+			HttpServletRequest request,HttpServletResponse response
+			){
+		Contact c = service.getContactById(id);
+		JSONObject j = new JSONObject();
+		j.put("cId", c.getcId());
+		j.put("cName", c.getcName());
+		j.put("cPhone", c.getcPhone());
+		j.put("cCity", c.getcCity());
+		j.put("cRegion", c.getcRegion());
+		j.put("cUser", c.getcUserId());
+		JsonSend.send(response, j.toJSONString());
+	}
+	
 	private JSONObject getStatus(boolean status){
 		JSONObject j = new JSONObject();
 		if(status){
@@ -119,5 +135,7 @@ public class ContactController {
 		}
 		return j;
 	}
+	
+	
 
 }

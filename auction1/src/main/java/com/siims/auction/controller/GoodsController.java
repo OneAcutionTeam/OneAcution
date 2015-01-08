@@ -95,7 +95,7 @@ public class GoodsController {
 			ModelMap model,
 			HttpServletRequest request,HttpServletResponse response
 			){
-		String[] id = ids.split(";");
+		String[] id = ids.split(",");
 		List<Goods> goods = new ArrayList<Goods>();
 		List<Contact> contacts = new ArrayList<Contact>();
 		for(String s : id){
@@ -124,7 +124,7 @@ public class GoodsController {
 	
 	@RequestMapping(value="delete_goods_seleted",method=RequestMethod.POST)
 	public void deleteSeletedGoods(
-			@RequestParam(value="goods_ids",required=true) String ids,
+			@RequestParam(value="goods_id",required=true) String ids,
 			ModelMap model,
 			HttpServletRequest request,HttpServletResponse response
 			){
@@ -153,6 +153,7 @@ public class GoodsController {
 			ModelMap model,
 			HttpServletRequest request,HttpServletResponse response
 			){
+		System.out.println(ids);
 		boolean isDelete = service.publishSeletedGoods(ids);
 		
 		JSONObject j = getStatus(isDelete);

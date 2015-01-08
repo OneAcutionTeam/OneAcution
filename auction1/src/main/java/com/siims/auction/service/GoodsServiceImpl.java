@@ -136,6 +136,7 @@ public class GoodsServiceImpl implements GoodsService{
 		
 		try{
 			dao.executeHql(hql);
+			System.out.println(hql);
 			return true;
 		}catch(Exception e){
 			System.out.println(e.toString());
@@ -146,6 +147,7 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public boolean publishSeletedGoods(String ids) {
 		// TODO Auto-generated method stub
+		System.out.println(ids);
 	String hql = "update Goods g set g.gPublished = 1 where g.id in ( "+ids+")";
 		
 		try{
