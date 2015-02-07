@@ -32,6 +32,8 @@ public class GoodsServiceImpl implements GoodsService{
 			j.put("gImages", g.getgImages());
 			j.put("gContract", g.getgConTractId());
 			j.put("gUserId", g.getgUserId());
+			j.put("gVideo",g.getgVideo());
+			j.put("gVideoCover", g.getgVideoCover());
 			res.add(j);
 		}
 		return res;
@@ -60,6 +62,8 @@ public class GoodsServiceImpl implements GoodsService{
 			j.put("gImages", g.getgImages());
 			j.put("gContract", g.getgConTractId());
 			j.put("gUserId", g.getgUserId());
+			j.put("gVideo",g.getgVideo());
+			j.put("gVideoCover", g.getgVideoCover());
 			res.add(j);
 		}
 		return res;
@@ -157,6 +161,20 @@ public class GoodsServiceImpl implements GoodsService{
 			System.out.println(e.toString());
 		}
 		return false;
+	}
+
+	@Override
+	public boolean deleteGoodsByContact(String cId) {
+		// TODO Auto-generated method stub
+		String hql = "delete from Goods g where g.gConTractId = "+cId;
+		try{
+			dao.deleteByHql(hql);
+			return true;
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return false;
+		
 	}
 
 }

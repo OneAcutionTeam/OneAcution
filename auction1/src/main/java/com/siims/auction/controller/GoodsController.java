@@ -70,7 +70,8 @@ public class GoodsController {
 		j.put("gImages", g.getgImages());
 		j.put("gContract", g.getgConTractId());
 		j.put("gUserId", g.getgUserId());
-
+		j.put("gVideo",g.getgVideo());
+		j.put("gVideoCover", g.getgVideoCover());
 		
 		JsonSend.send(response, j.toJSONString());
 	}

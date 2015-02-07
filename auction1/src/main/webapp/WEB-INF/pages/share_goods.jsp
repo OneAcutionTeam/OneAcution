@@ -8,12 +8,168 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>我的商品</title>
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/jquery.cycle.all.js"></script>
+	<script src="../js/jquery-1.9.1.min.js"></script>
+  <!-- End SlidesJS Required -->
+
+  <!-- SlidesJS Required: Link to jquery.slides.js -->
+  <script src="../js/jquery.slides.min.js"></script>
    		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <link rel="stylesheet" href="../css/example.css">
+  <link rel="stylesheet" href="../css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+ <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      font: normal 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #232525;
+      padding-top:5px;
+    }
 
+    #slides {
+      display: none
+    }
 
+    #slides .slidesjs-navigation {
+      margin-top:5px;
+    }
+
+    a.slidesjs-next,
+    a.slidesjs-previous,
+    a.slidesjs-play,
+    a.slidesjs-stop {
+   
+      background-repeat: no-repeat;
+      display:block;
+      width:12px;
+      height:18px;
+      overflow: hidden;
+      text-indent: -9999px;
+      float: left;
+      margin-right:5px;
+    }
+
+    a.slidesjs-next {
+      margin-right:10px;
+      background-position: -12px 0;
+    }
+
+    a:hover.slidesjs-next {
+      background-position: -12px -18px;
+    }
+
+    a.slidesjs-previous {
+      background-position: 0 0;
+    }
+
+    a:hover.slidesjs-previous {
+      background-position: 0 -18px;
+    }
+
+    a.slidesjs-play {
+      width:15px;
+      background-position: -25px 0;
+    }
+
+    a:hover.slidesjs-play {
+      background-position: -25px -18px;
+    }
+
+    a.slidesjs-stop {
+      width:18px;
+      background-position: -41px 0;
+    }
+
+    a:hover.slidesjs-stop {
+      background-position: -41px -18px;
+    }
+
+    .slidesjs-pagination {
+      margin: 7px 0 0;
+      float: right;
+      list-style: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(../images/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    #slides a:link,
+    #slides a:visited {
+      color: #333
+    }
+
+    #slides a:hover,
+    #slides a:active {
+      color: #9e2020
+    }
+
+    .navbar {
+      overflow: hidden
+    }
+    
+     #slides {
+      display: none
+    }
+
+    .container {
+      margin: 0 auto
+    }
+
+    /* For tablets & smart phones */
+    @media (max-width: 767px) {
+      body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .container {
+        width: auto
+      }
+    }
+
+    /* For smartphones */
+    @media (max-width: 480px) {
+      .container {
+        width: auto
+      }
+    }
+
+    /* For smaller displays like laptops */
+    @media (min-width: 768px) and (max-width: 979px) {
+      .container {
+        width: 724px
+      }
+    }
+
+    /* For larger displays */
+    @media (min-width: 1200px) {
+      .container {
+        width: 1170px
+      }
+    }
+    
+  </style>
 		
 
 <%
@@ -27,51 +183,28 @@
 
 
 %>
-<style type="text/css">
 
-th {
-text-align: center;
-color: #555555;
-background-color: #fcfcfc;
-}
-tr {
-text-align: center;
-color: #1ABC9C;
-background-color: #fcfcfc;
-}
-.color-lightgray{
-background-color: #f5f5f5;
-}
-
-table{
-border-collapse: separate;
-border-spacing: 1px;
-border-color: #16A085;
-background-color: #999999;
-}
-.clear{
-background-color: #fcfcfc;
-width: 100%;
-height:20px;
-}
-
-
-
-</style>
 
 <script type="text/javascript">
-
-
 $(function() {
-    $('.pics').cycle({
-       	fx:        'cover',
-       	delay:    -2000,
-		before: function(curr, next, opts) {
-			opts.animOut.opacity = 0;
-		}
-    });
-   
+   $('.imgsdiv').slidesjs({
+     width: 360,
+     height:350,
+     navigation: false,
+     play: {
+       active: false,
+       auto: true,
+       interval: 4000,
+       swap: true
+    }
+  });
+
+   $("#buy").click(function(){
+		$(this).css("  background-image: url(../images/btn_cirl_green_pressed.png)");
+
+	   });
 });
+
 
 
 </script>
@@ -81,51 +214,65 @@ $(function() {
 <body >
 <%for(int i=0;i<goods.size();i++){
 	Goods g = goods.get(i);
-	String[] imgs = g.getgImages().split(";");
-	
+	String[] imgs = g.getgImages().substring(0,g.getgImages().length()-1).split(";");
+	Contact c = contacts.get(i);
 	%>
-<table width="100%"  border="0">
-  <tr class="color-lightgray" height=40>
-    <th colspan="4" scope="col" ><%=g.getgName() %></th>
-  </tr>
-  <tr>
-    <th colspan="4" scope="row" height=260 >
-					
-		
-	
-            
-   <div id="cover<%= i%>" class="pics" style="position: relative; overflow: hidden;width:100%;;" align="center">
-            <img src="../images/<%=imgs[0] %>"  style="position: absolute; top: 0px; left: 0px; z-index: 4; opacity: 1; width: 100%; height: 250px; display: block;">
-            <img src="../images/<%=imgs[1] %>"  style="position: absolute; top: 0px; left: 0px; z-index: 3; opacity: 0; width: 100%; height: 250px; display: none;">
-            <img src="../images/<%=imgs[2] %>" style="position: absolute; top: 0px; left: 0px; z-index: 3; opacity: 0; width: 100%; height: 250px;">
-       </div>
-   
-		
-
-    </th>
-  </tr>
-  <tr height=40>
-    <th width="201" scope="row"class="color-lightgray">原价</th>
-    <td width="411"><%=g.getgOrigionPrice() %></td>
-    <th width="209"class="color-lightgray">现价</th>
-    <td width="366"><%=g.getgPrice() %></td>
-  </tr>
-  <tr height=150>
-    <th scope="row"class="color-lightgray">描述</th>
-    <td colspan="3"><%=g.getgDetailDesc() %></td>
-  </tr>
-  <tr height=40>
-    <th scope="row"class="color-lightgray">联系人</th>
-    <td colspan="3"><%=contacts.get(i).getcName() %>——电话<%=contacts.get(i).getcPhone() %></td>
-  </tr>
-  <tr height=40>
-    <th scope="row"class="color-lightgray">地点</th>
-    <td colspan="3"><%=contacts.get(i).getcCity() %>——<%=contacts.get(i).getcRegion() %></td>
-  </tr>
+	<div class="container">
+	<%if(imgs.length==1){
+		%>
+		<div id="slides"style="overflow: hidden; display:inherit;margin-bottom: 10px;" >
+<% 	} else{%>
+    <div id="slides" class="imgsdiv">
+    <%} %>
+    <%for(int j = 0;j<imgs.length;j++) {%>
+      <img src="../images/<%=imgs[j] %>" alt="<%=j%>">
+   <%} %>
+    </div>
+    <%if(g.getgVideo()!=null||!g.getgVideo().equals("")) {%>
+    <video class="" controls preload="none" width="100%" height="264" poster="../images/<%=g.getgVideoCover()%>"data-setup="{}">
+    <source src="../video/<%=g.getgVideo() %>" type="video/mp4"/>
+    
+    </video>
+    <%} %>
+  </div>
   
-</table>
-<div class="clear"></div>
-	<%} %>
+	 <div class="item-info">
+     <div class="item-price">
+        <span class="new">
+            <span class="rmb">￥</span><%=g.getgPrice() %>
+        </span>
+		&nbsp;&nbsp;
+        <span class="old">
+            <span class="rmb">￥</span><%=g.getgOrigionPrice() %>
+        </span>
+		&nbsp;&nbsp;
+		<input class="anniu" type="button" id="buy" value="立即购买">
+     </div>
+
+	<hr>
+	 <div class="item-name">
+	   <span><%=g.getgName() %></span>
+	</div>
+
+	<div class="item-detail">
+    <p class="item-detail-cont">
+        <%=g.getgDetailDesc() %>
+    </p>
+    </div>
+   </div>
+	<div class="fill"></div><br/>
+  
+	
+    <div class="item-user">
+	   <p  class="item-user-info">卖家联系方式</p><hr>
+        <p class="item-user-name">卖家：<span style="color:gray;"><%=c.getcName() %></span></p>
+		<p class="item-user-telenum">电话：<span style="color:gray;"><%=c.getcPhone() %></span></p>
+        <div class="item-user-meta">
+          <p class="item-user-addr">地址：<span style="color:gray;"><%=c.getcCity().replace(";", "  ")+"  "+c.getcRegion()%></span></p>
+        </div>
+    </div>
+	
+<%} %>
 
 </body>
 </html>

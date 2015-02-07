@@ -26,6 +26,7 @@ import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.siims.auction.domain.Contact;
 import com.siims.auction.service.ContactService;
+import com.siims.auction.service.GoodsService;
 import com.siims.auction.utils.JsonSend;
 
 @Controller

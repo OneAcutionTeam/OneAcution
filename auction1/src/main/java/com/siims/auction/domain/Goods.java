@@ -40,9 +40,32 @@ public class Goods implements Serializable{
 	@Column(name="g_user_id")
 	private String gUserId;
 	
+	@Column(name="g_video")
+	private String gVideo;
+	@Column(name="g_video_cover")
+	private String gVideoCover;
+	
+	
+	
 
 	
 
+
+	public String getgVideoCover() {
+		return gVideoCover;
+	}
+
+	public void setgVideoCover(String gVideoCover) {
+		this.gVideoCover = gVideoCover;
+	}
+
+	public String getgVideo() {
+		return gVideo;
+	}
+
+	public void setgVideo(String gVideo) {
+		this.gVideo = gVideo;
+	}
 
 	public String getgUserId() {
 		return gUserId;

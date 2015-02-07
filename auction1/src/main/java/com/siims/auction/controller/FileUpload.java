@@ -2,16 +2,12 @@ package com.siims.auction.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +17,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.alibaba.fastjson.JSONObject;
+import com.siims.auction.domain.Essay;
 import com.siims.auction.domain.Goods;
+import com.siims.auction.service.EssayService;
 import com.siims.auction.service.GoodsService;
+import com.siims.auction.utils.ImageUtil;
 import com.siims.auction.utils.JsonSend;
 
 @Controller
@@ -31,6 +30,8 @@ public class FileUpload {
 	
 	@Autowired
 	GoodsService service;
+	@Autowired
+	EssayService eService;
 	
 	@RequestMapping("/upload")
     public void uploadFile(
@@ -40,7 +41,7 @@ public class FileUpload {
 			@RequestParam(value="goods_price",required=true)float price,
 			@RequestParam(value="good_desc",required=true)String desc,
 			@RequestParam(value="goods_contract",required=true)String contactId,
-
+			@RequestParam(value="goods_id",required=false)String gId,
             HttpServletRequest request,HttpServletResponse response
 
     ) throws ServletException, IOException {
@@ -48,12 +49,13 @@ public class FileUpload {
 		
 		Goods g = new Goods();
 		
-		Calendar c=Calendar.getInstance();
-		//以当前毫秒数作为id保证唯一性
-		long uniqueId = c.getTimeInMillis();
+	
 		String images="";
-
-		String savePath ="C:/Program Files/apache-tomcat-7.0.53/webapps/auction1/images/";//request.getContextPath();
+		String videoName = "";
+		String videoImage = "";
+		String saveVideoPath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/video/";
+		
+		String savePath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/images/";//request.getContextPath();
 		 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
 		
 		 if(multipartResolver.isMultipart(request)){
@@ -69,16 +71,33 @@ public class FileUpload {
 	                    //如果名称不为“”,说明该文件存在，否则说明该文件不存在  
 	                    if(myFileName.trim() !=""){  
 	                        System.out.println(myFileName); 
-	                        images +=myFileName+";";
+	                       
 	                        //重命名上传后的文件名  
-	                        String fileName =  file.getOriginalFilename();  
+	                        
+	                       // String fileName =  file.getOriginalFilename();  
+	                        if(myFileName.endsWith(".mp4")){//视频文件
+	                        	String videoPath = saveVideoPath+ myFileName;
+	                        	File localFile = new File(videoPath);  
+	  	                        file.transferTo(localFile);
+	  	                        videoName = myFileName;
+	  	                        continue;
+	                        }
+	                        if(myFileName.startsWith("AUC_")){
+	                        	videoImage = myFileName;
+	                        }else{
+	                        	images +=myFileName+";";
+	                        }
 	                        //定义上传路径  
-	                        String path = savePath+ fileName;
-	                        
-	                        
+	                        String path = savePath+ myFileName;
 	                        System.out.println("saved in path :"+path);
-	                        File localFile = new File(path);  
-	                        file.transferTo(localFile);  
+	                        try {
+								ImageUtil.formateImage(path, file.getInputStream());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                       // File localFile = new File(path);  
+	                      //  file.transferTo(localFile);  
 	                    }  
 	                }  
 	            } 
@@ -86,7 +105,7 @@ public class FileUpload {
 			 System.out.println(request.getContentType());
 		 }
        
-		g.setGoodsId(""+uniqueId);
+		g.setGoodsId(gId);
 		g.setgBriefDesc(desc);
 		g.setgDetailDesc(desc);
 		g.setgName(name);
@@ -96,9 +115,98 @@ public class FileUpload {
 		g.setgImages(images);
 		g.setgPublished(0);
 		g.setgUserId(userId);
-       System.out.println("add name "+g.getgName());
+		g.setgVideo(videoName);
+		g.setgVideoCover(videoImage);
+       System.out.println("add name "+g.getgName()+"add id"+g.getGoodsId()+" voide "+g.getgVideo());
         JSONObject j = new JSONObject();
         if(service.addGoods(g)){
+        	j.put("status", 1);
+        }else{
+        	j.put("status", 0);
+        }
+        JsonSend.send(response, j.toJSONString());
+      
+    }
+	
+	@RequestMapping("/upload_essay")
+    public void uploadFileEssay(
+    		@RequestParam(value="e_name",required=true) String name,
+			@RequestParam(value="e_user_id",required=true)String userId,
+			@RequestParam(value="e_content",required=true)String content,
+			@RequestParam(value="e_goods_id",required=true)String goodsId,
+			@RequestParam(value="e_id",required=false)String eId,
+            HttpServletRequest request,HttpServletResponse response
+
+    ) throws ServletException, IOException {
+		Essay essay = new Essay();
+	
+		String images="";
+		String videoName = "";
+		String videoImage = "";
+		String saveVideoPath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/video/";
+		
+		String savePath ="C:/Users/PCNCAD-dosh/git/OneAcution/auction1/src/main/webapp/images/";//request.getContextPath();
+		 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
+		
+		 if(multipartResolver.isMultipart(request)){
+			 MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;  
+	            //取得request中的所有文件名  
+	            Iterator<String> iter = multiRequest.getFileNames();  
+	            while(iter.hasNext()){  
+	                //取得上传文件  
+	                MultipartFile file = multiRequest.getFile(iter.next());  
+	                if(file != null){  
+	                    //取得当前上传文件的文件名称  
+	                    String myFileName = file.getOriginalFilename();  
+	                    //如果名称不为“”,说明该文件存在，否则说明该文件不存在  
+	                    if(myFileName.trim() !=""){  
+	                        System.out.println(myFileName); 
+	                       
+	                        //重命名上传后的文件名  
+	                        
+	                       // String fileName =  file.getOriginalFilename();  
+	                        if(myFileName.endsWith(".mp4")){//视频文件
+	                        	String videoPath = saveVideoPath+ myFileName;
+	                        	File localFile = new File(videoPath);  
+	  	                        file.transferTo(localFile);
+	  	                        videoName = myFileName;
+	  	                        continue;
+	                        }
+	                        if(myFileName.startsWith("AUC_")){
+	                        	videoImage = myFileName;
+	                        }else{
+	                        	images +=myFileName+";";
+	                        }
+	                        //定义上传路径  
+	                        String path = savePath+ myFileName;
+	                        System.out.println("saved in path :"+path);
+	                        try {
+								ImageUtil.formateImage(path, file.getInputStream());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                       // File localFile = new File(path);  
+	                      //  file.transferTo(localFile);  
+	                    }  
+	                }  
+	            } 
+		 }else{
+			 System.out.println(request.getContentType());
+		 }
+		 essay.seteId(eId);
+		essay.seteContent(content);
+		essay.setEgId(eId);
+		essay.seteName(name);
+		essay.setePicture(images);
+		essay.setEuId(userId);
+		essay.setEgId(goodsId);
+		essay.seteVideo(videoName);
+		essay.seteVideoPic(videoImage);
+		
+
+        JSONObject j = new JSONObject();
+        if(eService.addEssay(essay)){
         	j.put("status", 1);
         }else{
         	j.put("status", 0);

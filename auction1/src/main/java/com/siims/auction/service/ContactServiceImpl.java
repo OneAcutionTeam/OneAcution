@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.siims.auction.dao.contact.ContactDao;
+import com.siims.auction.dao.goods.IgoodsDao;
 import com.siims.auction.domain.Contact;
 
 @Service
 public class ContactServiceImpl implements ContactService{
 	@Autowired
 	private ContactDao dao;
+	@Autowired 
+	private GoodsService gService;
 
 	@Override
 	public List<JSONObject> getAllContacts() {
@@ -83,14 +86,16 @@ public class ContactServiceImpl implements ContactService{
 	@Override
 	public boolean deleteContact(String contactId) {
 		// TODO Auto-generated method stub
+		String hql = "delete from Contact c where c.cId = "+contactId;
 		try{
-			dao.delete(contactId);
+			gService.deleteGoodsByContact(contactId);
+			dao.deleteByHql(hql);
+			
 			return true;
-			}
-			catch(Exception e){
-				
-			}
-			return false;
+		}catch(Exception e){
+			System.out.println(e.toString());
+		}
+		return false;
 	}
 
 	@Override
